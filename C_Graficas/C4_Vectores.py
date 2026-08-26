@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import numpy as np
-valores= input("Escriba los valores del vector por separado:")
+valores= input("Escriba los valores del vector por separado [x,y,z]:")
 numeros=[int(x) for x in valores.split()]
 vector= np.array(numeros)
 x= vector[0]
