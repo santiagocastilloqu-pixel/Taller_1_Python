@@ -1,6 +1,6 @@
 import math
 
-print("--- Calculadora para hallar volúmenes ---")
+print("Calculadora para hallar volúmenes")
 print("Elige una de las siguientes opciones:")
 print("1. Prisma\n2. Pirámide\n3. Cono Truncado\n4. Cilindro")
 
