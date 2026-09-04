@@ -3,41 +3,66 @@ import matplotlib.pyplot as plt
 from scipy import signal
 
 print("Funcion de transferencia de segundo orden")
-print("G(s) = (b0*s + b1) / (a0*s^2 + a1*s + a2)")
+print("G(s) = K * wn^2 / (s^2 + 2*zeta*wn*s + wn^2)")
 
-# Numerador
-b0 = float(input("Ingrese b0: "))
-b1 = float(input("Ingrese b1: "))
+K = float(input("Ingrese la ganancia K: "))
+wn = float(input("Ingrese la frecuencia natural wn: "))
+zeta = float(input("Ingrese el factor de amortiguamiento zeta: "))
 
-# Denominador
-a0 = float(input("Ingrese a0: "))
-a1 = float(input("Ingrese a1: "))
-a2 = float(input("Ingrese a2: "))
+if wn <= 0:
 
-if a0 == 0:
-    print("a0 no puede ser 0")
+    print("La frecuencia natural debe ser mayor que 0")
+
 else:
-    delta = a1**2 - 4*a0*a2
 
-    print("Discriminante:", delta)
 
-    if delta < 0:
+    delta = (2 * zeta * wn)**2 - 4 * wn**2
+
+    print("\nDiscriminante:", delta)
+
+    # Determinar el tipo de sistema
+    if zeta < 1 and zeta > 0:
         print("Sistema subamortiguado")
-    elif delta == 0:
+
+    elif zeta == 1:
         print("Sistema criticamente amortiguado")
-    else:
+
+    elif zeta > 1:
         print("Sistema sobreamortiguado")
 
-    numerador = [b0, b1]
-    denominador = [a0, a1, a2]
+    elif zeta == 0:
+        print("Sistema sin amortiguamiento")
 
-    sistema = signal.TransferFunction(numerador, denominador)
+    else:
+        print("Sistema inestable")
+
+
+   
+    numerador = [K * wn**2]
+
+    
+    denominador = [1, 2 * zeta * wn, wn**2]
+
+
+    sistema = signal.TransferFunction(
+        numerador,
+        denominador
+    )
+    print("\nNumerador:", numerador)
+    print("Denominador:", denominador)
+
+    print("\nFuncion de transferencia:")
+    print(sistema)
 
     tiempo, respuesta = signal.step(sistema)
 
     plt.plot(tiempo, respuesta)
-    plt.title("Respuesta al escalon")
+
+    plt.title("Respuesta al escalon - Sistema de segundo orden")
+
     plt.xlabel("Tiempo (s)")
     plt.ylabel("Amplitud")
+
     plt.grid(True)
+
     plt.show()
